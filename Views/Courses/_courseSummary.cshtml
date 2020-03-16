@@ -1,0 +1,89 @@
+﻿@model IEnumerable<CourseManagement_MVC.ViewModels.CourseViewModel>
+@using PagedList
+@using PagedList.Mvc
+
+<h2>Course summary</h2>
+
+<div class="btn-toolbar mb-2">
+    <div class="btn-group">
+        <a class="btn btn-secondary" href="/Courses/CrudUI">CRUD UI</a>
+    </div>
+    <div class="btn-group ml-auto mr-2">
+        @using (Ajax.BeginForm("Summary", new { }, new AjaxOptions { Url = Url.Action("Summary", "Courses"), HttpMethod = "POST", UpdateTargetId = "holder", InsertionMode = InsertionMode.Replace, AllowCache = false }, new { @class = "form-inline" }))
+        {
+            <div class="input-group">
+                <input type="text" name="search" class="form-control" placeholder="course name" aria-label="Input group example" aria-describedby="btnGroupAddon">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-secondary"><i class="fa fa-search"></i></button>
+                </div>
+            </div>
+        }
+
+    </div>
+    
+    <a class="btn btn-secondary" href="/Courses/Index"><i class="fa fa-refresh"></i></a>
+</div>
+<table class="table table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                @Ajax.ActionLink("Course Name", "Summary", "Courses", new { sort = ViewBag.NameSort, search = ViewBag.Search }, new AjaxOptions { HttpMethod = "Post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "holder", AllowCache = false }, new { @class = "text-white" })
+                <i class="@(ViewBag.NameSort == "name"? "fa fa-sort-desc": "fa fa-sort-asc")"></i>
+            </th>
+            <th>
+                @Ajax.ActionLink("Course Fee", "Summary", "Courses", new { sort = ViewBag.FeeSort, search = ViewBag.Search }, new AjaxOptions { HttpMethod = "Post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "holder", AllowCache = false }, new { @class = "text-white" })
+                <i class="@(ViewBag.FeeSort == "fee"? "fa fa-sort-desc": "fa fa-sort-asc")"></i>
+                
+            </th>
+            <th>
+                @Ajax.ActionLink("Course Duration", "Summary", "Courses", new { sort = ViewBag.DurationSort, search = ViewBag.Search }, new AjaxOptions { HttpMethod = "Post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "holder", AllowCache = false }, new { @class = "text-white" })
+                <i class="@(ViewBag.DurationSort == "duration"? "fa fa-sort-desc": "fa fa-sort-asc")"></i>
+                
+            </th>
+            <th>
+                @Ajax.ActionLink("Start Date", "Summary", "Courses", new { sort = ViewBag.StartSort, search = ViewBag.Search }, new AjaxOptions { HttpMethod = "Post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "holder", AllowCache = false }, new { @class = "text-white" })
+                <i class="@(ViewBag.StartSort == "start"? "fa fa-sort-desc": "fa fa-sort-asc")"></i>
+                
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StudentCount)
+            </th>
+        </tr>
+    </thead>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CourseName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CourseFee)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Duration)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StudentCount)
+            </td>
+            @*<td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.CourseId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.CourseId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.CourseId })
+                </td>*@
+        </tr>
+    }
+
+</table>
+<div class="text-right">
+    @Html.PagedListPager(Model as IPagedList, page => Url.Action("Summary", new { page = page, sort = ViewBag.CurrentSort }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(
+                   new AjaxOptions
+                   {
+                       InsertionMode = InsertionMode.Replace,
+                       HttpMethod = "POST",
+                       UpdateTargetId = "holder"
+                   }))
+</div>

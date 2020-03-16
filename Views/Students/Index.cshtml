@@ -1,0 +1,63 @@
+﻿@model IEnumerable<CourseManagement_MVC.Models.Student>
+@using PagedList
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Student List</h2>
+
+<div class="d-flex flex-row justify-content-end mb-2">
+
+    @Html.ActionLink("Create New", "Create", new { }, new { @class = "btn btn-primary" })
+</div>
+<table class="table table-bordered table-striped">
+    <thead class="thead-light">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Course.CourseName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StudentName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Course.CourseName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StudentName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.StudentId }, new {@class="btn btn-primary btn-sm" }) 
+                
+                @Html.ActionLink("Delete", "Delete", new { id = item.StudentId }, new { @class = "btn btn-danger btn-sm" })
+            </td>
+        </tr>
+    }
+
+</table>
+<div class="d-flex flex-row justify-content-end">
+    @Html.PagedListPager(Model as IPagedList, page => Url.Action("Index", new { page = page }))
+</div>
+@section styles{
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+   
+}

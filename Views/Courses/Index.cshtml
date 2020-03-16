@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row">
+    <div class="col" id="holder">
+        @Html.Action("Summary");
+
+    </div>
+</div>
+@section styles{
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+}
+@section scripts {
+
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+}

@@ -1,0 +1,59 @@
+﻿@model IEnumerable<CourseManagement_MVC.Models.Course>
+
+@{
+    ViewBag.Title = "CrudUI";
+}
+
+<div class="row">
+    <div class="col">
+        <h2>Manage Course</h2>
+
+        <div class="text-right mb-2">
+            @Html.ActionLink("Create New", "Create", new { }, new { @class="btn btn-secondary"})
+        </div>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CourseName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CourseFee)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Duration)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.StartDate)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CourseName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CourseFee)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Duration)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StartDate)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.CourseId }, new { @class="btn btn-outline-primary"}) 
+                        @Html.ActionLink("Details", "Details", new { id = item.CourseId }, new { @class = "btn btn-outline-info" })
+                        @Html.ActionLink("Delete", "Delete", new { id = item.CourseId }, new { @class = "btn btn-outline-danger" })
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+    </div>
+</div>
